@@ -1,24 +1,16 @@
-import React from 'react';
-import logo from './assets/icons/logo.svg';
-import {SApp, SHeader, SLink, SLogo} from "./assets/styles/app.styles";
+import { TodoList } from './components/TodoList'
+import { Header } from './components/Header'
+import './assets/styles/style.css'
+
+
+
 
 function App() {
     return (
-        <SApp>
-            <SHeader>
-                <SLogo src={logo} alt="logo"/>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <SLink
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </SLink>
-            </SHeader>
-        </SApp>
+        <div className="todo">
+            <Header />
+            <TodoList />
+        </div>
     );
 }
 
