@@ -110,7 +110,7 @@ button, input, select, textarea{
     height: 30px;
     border-radius: 6px;
 }
-.visible__text{
+.visible__text, .line__text{
     font-size: 24px;
 }
 .visible__btn, .hidden__btn{
@@ -135,5 +135,7 @@ button, input, select, textarea{
         border: none;
         outline: 2px solid aquamarine;
     }
-
+}
+.line__text{
+    text-decoration: line-through;
 }

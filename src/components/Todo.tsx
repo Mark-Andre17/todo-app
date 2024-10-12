@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from 'react'
 import ITodo from '../types/types'
 import { ButtonVisible } from './ButtonVisible'
-import { ButtonText } from '../types/types'
+import { ButtonText, ClassNameText } from '../types/types'
 import { ButtonHidden } from './ButtonHidden'
 
 type TodoProps = {
@@ -14,9 +14,10 @@ export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
     const handleChangeCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
         const updatedTodos = todos.map((item) => {
             if (item.id === event.target.id) {
+
                 return {
                     ...item, 
-                    completed: !item.completed 
+                    completed: !item.completed, 
                 }
             }
             return item
@@ -68,7 +69,8 @@ export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
         const visibleTodo = todos.map((item, index) =>{
             if(index === saveIndex) {
                 return {
-                    ...item, 
+                    ...item,
+                    completed: !item.completed, 
                     visible: !item.visible 
                 }
             }
@@ -85,7 +87,7 @@ export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
                     {!todo.visible ? 
                         <div className="visible__btns">
                             <input className='visible__input' type="checkbox" id={todo.id} onChange={handleChangeCheckbox} checked={todo.completed}/>
-                            <p className='visible__text'>{todo.title}</p>
+                            <p className={todo.completed ? ClassNameText.LINE : ClassNameText.VISIBLE}>{todo.title}</p>
                             <ButtonVisible text={ButtonText.EDIT} index={index} onclick={handleToggleVisible}/>
                             <ButtonVisible text={ButtonText.DELETE} index={index} onclick={handleDelete}/>
                         </div>:

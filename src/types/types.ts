@@ -16,7 +16,10 @@ const enum ButtonText {
     ACTIVE = 'Show active tasks',
     COMPLETED = 'Show completed tasks'
 }
-
+const enum ClassNameText {
+    LINE = 'line__text',
+    VISIBLE = 'visible__text'
+ }
 
 export default ITodo
-export { ButtonText }
+export { ButtonText, ClassNameText }
