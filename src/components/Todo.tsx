@@ -53,10 +53,11 @@ export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
 
     const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
         const updatedTodos = todos.map((item) => {
-            if (item.id === event.target.id) {
+            if (item.id === event.target.id && item.title !== event.target.value) {
                 return {
                    ...item, 
-                    title: event.target.value
+                    title: event.target.value,
+                    completed: !item.completed
                 }
             }
             return item
@@ -69,8 +70,7 @@ export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
         const visibleTodo = todos.map((item, index) =>{
             if(index === saveIndex) {
                 return {
-                    ...item,
-                    completed: !item.completed, 
+                    ...item, 
                     visible: !item.visible 
                 }
             }
