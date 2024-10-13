@@ -1,5 +1,4 @@
 import ITodo from '../types/types'
-import { useEffect } from 'react'
 
 
 export const todoList: ITodo[] = [

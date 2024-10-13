@@ -10,7 +10,9 @@ type TodoProps = {
 }
 
 export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
-
+    function saveLS(todosArray:ITodo[]){
+        localStorage.setItem('todos', JSON.stringify(todosArray))
+    }
     const handleChangeCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
         const updatedTodos = todos.map((item) => {
             if (item.id === event.target.id) {
@@ -23,7 +25,7 @@ export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
             return item
         })
         setTodo(updatedTodos)
-        localStorage.setItem('todos', JSON.stringify(updatedTodos))
+        saveLS(updatedTodos)
     }
 
     const handleDelete = (deleteIndex: number | undefined) => {
@@ -34,7 +36,7 @@ export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
             return true
         }) 
         setTodo(deleteTodo)
-        localStorage.setItem('todos', JSON.stringify(deleteTodo))
+        saveLS(deleteTodo)
     }
 
     const handleToggleVisible = (toggleIndex: number | undefined) => {
@@ -48,7 +50,7 @@ export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
             return item
         })
         setTodo(visibleTodo)
-        localStorage.setItem('todos', JSON.stringify(visibleTodo))
+        saveLS(visibleTodo)
     }
 
     const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +65,7 @@ export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
             return item
         })
         setTodo(updatedTodos)
-        localStorage.setItem('todos', JSON.stringify(updatedTodos))
+        saveLS(updatedTodos)
     }
 
     const handleSaveClick = (saveIndex: number | undefined) => {
@@ -77,28 +79,29 @@ export const Todo: FC<TodoProps> = ({ todos, setTodo }) => {
             return item
         })
         setTodo(visibleTodo)
-        localStorage.setItem('todos', JSON.stringify(visibleTodo))
+        saveLS(visibleTodo)
     }
+    const item = todos.map((todo, index) => (
+        <li key={todo.id} className='todo__item'>
+            {!todo.visible ? 
+                <div className="visible__btns">
+                    <input className='visible__input' type="checkbox" id={todo.id} onChange={handleChangeCheckbox} checked={todo.completed}/>
+                    <p className={todo.completed ? ClassNameText.LINE : ClassNameText.VISIBLE}>{todo.title}</p>
+                    <ButtonVisible text={ButtonText.EDIT} index={index} onclick={handleToggleVisible}/>
+                    <ButtonVisible text={ButtonText.DELETE} index={index} onclick={handleDelete}/>
+                </div>:
+                <div className="hidden__btns">
+                    <input className='hidden__input' type='text' id={todo.id} value={todo.title} onChange={handleChangeValue}/>
+                    <ButtonHidden text={ButtonText.SAVE} index={index} onclick={handleSaveClick}/>
+                    <ButtonHidden index={index} text={ButtonText.CANCEL} onclick={handleToggleVisible}/>
+                </div>
+            }
+        </li> 
+    ))
 
     return (
         <ul className='todo__items'>
-            {todos.map((todo, index) => (
-                <li key={todo.id} className='todo__item'>
-                    {!todo.visible ? 
-                        <div className="visible__btns">
-                            <input className='visible__input' type="checkbox" id={todo.id} onChange={handleChangeCheckbox} checked={todo.completed}/>
-                            <p className={todo.completed ? ClassNameText.LINE : ClassNameText.VISIBLE}>{todo.title}</p>
-                            <ButtonVisible text={ButtonText.EDIT} index={index} onclick={handleToggleVisible}/>
-                            <ButtonVisible text={ButtonText.DELETE} index={index} onclick={handleDelete}/>
-                        </div>:
-                        <div className="hidden__btns">
-                            <input className='hidden__input' type='text' id={todo.id} value={todo.title} onChange={handleChangeValue}/>
-                            <ButtonHidden text={ButtonText.SAVE} index={index} onclick={handleSaveClick}/>
-                            <ButtonHidden index={index} text={ButtonText.CANCEL} onclick={handleToggleVisible}/>
-                        </div>
-                    }
-                </li> 
-            ))}
+            {item}
         </ul>
     )
 }
